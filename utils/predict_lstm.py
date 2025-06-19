@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 from tensorflow.keras.models import load_model
-from tensorflow.keras.layers import LSTM
 import joblib
 
 def predict_lstm(csv_path, model_path, scaler_path, steps=1, time_steps=60):
@@ -10,7 +9,7 @@ def predict_lstm(csv_path, model_path, scaler_path, steps=1, time_steps=60):
     df = df.sort_values('Date' if 'Date' in df.columns else df.columns[0])
 
     scaler = joblib.load(scaler_path)
-    model = load_model(model_path, custom_objects={"LSTM": LSTM})
+    model = load_model(model_path)
 
     # Scale using all 5 columns for proper inverse transformation
     scaled_full = scaler.transform(df)
