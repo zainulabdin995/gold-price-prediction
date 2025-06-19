@@ -10,7 +10,7 @@ def load_legacy_lstm_model(h5_path):
         model_config = f.attrs.get('model_config')
         if model_config is None:
             raise ValueError("Model config not found in the H5 file.")
-        model = model_from_json(model_config.decode('utf-8'))
+        model = model_from_json(model_config if isinstance(model_config, str) else model_config.decode('utf-8'))
         model.load_weights(h5_path)
     return model
 
